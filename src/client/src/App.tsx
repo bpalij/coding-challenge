@@ -82,11 +82,9 @@ function App() {
             }
           };
         }
+      });
 
-        setTopPerCategoryByFollowers(topPerCategoryByFollowersLocal);
-
-
-      })
+      setTopPerCategoryByFollowers(topPerCategoryByFollowersLocal);
     });
   }, []);
 
