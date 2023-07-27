@@ -41,6 +41,7 @@ function App() {
 
   const [data, setData] = useState<Array<dataItem>>([]);
   const [topPerCategoryByFollowers, setTopPerCategoryByFollowers] = useState<groupedData>({});
+  const [topPerCountryByEngagementAvg, setTopPerCountryByEngagementAvg] = useState<groupedData>({});
 
 
   useEffect(() => {
@@ -50,6 +51,7 @@ function App() {
       const data = res.data as Array<dataItem>;
       setData(data);
       const topPerCategoryByFollowersLocal: groupedData = {};
+      const topPerCountryByEngagementAvgLocal: groupedData = {};
 
       data.forEach((item) => {
         const {category_1, category_2, Followers} = item;
@@ -85,6 +87,27 @@ function App() {
       });
 
       setTopPerCategoryByFollowers(topPerCategoryByFollowersLocal);
+
+      data.forEach((item) => {
+        const country = item['Audience country(mostly)'];
+        const engagementAvg = item['Engagement avg\r\n'] || item['Engagement avg\r'] || item['Engagement avg\n'] || '0';
+        const engagementAvgNumber = convertStringToNumber(engagementAvg);
+        if (!topPerCountryByEngagementAvgLocal[country]) {
+          topPerCountryByEngagementAvgLocal[country] = {
+            number: engagementAvgNumber,
+            item,
+          }
+        } else {
+          if (topPerCountryByEngagementAvgLocal[country].number < engagementAvgNumber) {
+            topPerCountryByEngagementAvgLocal[country] = {
+              number: engagementAvgNumber,
+              item,
+            }
+          }
+        }
+      });
+
+      setTopPerCountryByEngagementAvg(topPerCountryByEngagementAvgLocal);
     });
   }, []);
 
@@ -117,6 +140,7 @@ function App() {
           )
         )}
       </table>
+
       <h1>Top per category by followers</h1>
       <table>
         <tr>
@@ -133,6 +157,39 @@ function App() {
         {
           Object.keys(topPerCategoryByFollowers).map(key => {
             const item = topPerCategoryByFollowers[key].item;
+            return (
+              <tr key={JSON.stringify(item) + key}>
+                <td>{key}</td>
+                <td>{item['Influencer insta name']}</td>
+                <td>{item['instagram name']}</td>
+                <td>{item.category_1}</td>
+                <td>{item.category_2}</td>
+                <td>{item.Followers}</td>
+                <td>{item['Audience country(mostly)']}</td>
+                <td>{item['Authentic engagement\r\n'] || item['Authentic engagement\r'] || item['Authentic engagement\n']}</td>
+                <td>{item['Engagement avg\r\n'] || item['Engagement avg\r'] || item['Engagement avg\n']}</td>
+              </tr>
+            )
+          }
+        )}
+      </table>
+
+      <h1>Top per country by engagement avg</h1>
+      <table>
+        <tr>
+          <th>Leader per country</th>
+          <th>Influencer insta name</th>
+          <th>Instagram name</th>
+          <th>Category 1</th>
+          <th>Category 2</th>
+          <th>Followers</th>
+          <th>Audience country(mostly)</th>
+          <th>Authentic engagement</th>
+          <th>Engagement avg</th>
+        </tr>
+        {
+          Object.keys(topPerCountryByEngagementAvg).map(key => {
+            const item = topPerCountryByEngagementAvg[key].item;
             return (
               <tr key={JSON.stringify(item) + key}>
                 <td>{key}</td>
