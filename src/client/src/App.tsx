@@ -10,8 +10,12 @@ interface dataItem {
   category_2: string,
   Followers: string,
   'Audience country(mostly)': string,
-  'Authentic engagement\r\n': string,
-  'Engagement avg\r\n': string,
+  'Authentic engagement\r\n'?: string,
+  'Authentic engagement\r'?: string,
+  'Authentic engagement\n'?: string,
+  'Engagement avg\r\n'?: string,
+  'Engagement avg\r'?: string,
+  'Engagement avg\n'?: string,
 }
 
 interface groupedDataItem {
@@ -109,8 +113,8 @@ function App() {
               <td>{item.category_2}</td>
               <td>{item.Followers}</td>
               <td>{item['Audience country(mostly)']}</td>
-              <td>{item['Authentic engagement\r\n']}</td>
-              <td>{item['Engagement avg\r\n']}</td>
+              <td>{item['Authentic engagement\r\n'] || item['Authentic engagement\r'] || item['Authentic engagement\n']}</td>
+              <td>{item['Engagement avg\r\n'] || item['Engagement avg\r'] || item['Engagement avg\n']}</td>
             </tr>
           )
         )}
@@ -140,8 +144,8 @@ function App() {
                 <td>{item.category_2}</td>
                 <td>{item.Followers}</td>
                 <td>{item['Audience country(mostly)']}</td>
-                <td>{item['Authentic engagement\r\n']}</td>
-                <td>{item['Engagement avg\r\n']}</td>
+                <td>{item['Authentic engagement\r\n'] || item['Authentic engagement\r'] || item['Authentic engagement\n']}</td>
+                <td>{item['Engagement avg\r\n'] || item['Engagement avg\r'] || item['Engagement avg\n']}</td>
               </tr>
             )
           }
