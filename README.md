@@ -86,3 +86,18 @@ If anything needs clarifying, feel free to ask! You won't be judged negatively.
 It's a great thing to ask for clarification when needed.
 
 Reach me at `shane#1096` on Discord.
+
+## From me
+
+Not sure that 2h was absolutely enough for this prototype implementation, maybe not too simple.
+Most problematic things - browser can not consume streams nicely (but json is valid only if it is full, not good format for that), so it took time to understand it will not work and some stupid bugs like syntax in nested code. Also maybe thought too much.
+Server part was chosen as Express as simple minimalistic framework, that can give you endpoint with minimum code. This helped https://blog.logrocket.com/how-to-set-up-node-typescript-express/
+Firstly thought about csv and saw some libraries support streams, which i thought will be good (on this dataset it was not very needed, but better scaling).
+Inspired by https://stackoverflow.com/a/49169934 https://dev.to/isalevine/parsing-csv-files-in-node-js-with-fs-createreadstream-and-csv-parser-koi 
+For client used react because of previous experience and it can make minimum template with typescript with create-react-app.
+Potentially frontend could have more structured code (which in places is clearly processing by 1 row, this algorithm could be used in stream of rows).
+If consumer is Node.js server, potential alternative could be stream csv file in response and than processing it with special library by rows in client, store them somewhere and also forming grouped data.
+Perfectly it could put csv data to database, use pagination, grouping functions (but problem with categories - 2 columns, not sure if in SQL it will be possible) or as variant doing grouping operations by backend.
+
+## IMPORTANT
+To successfully start it note variables in .env. Client part has variable for endpoint url, backend has variable for port and IMPORTANT - absolute path to csv file - because it is easy and configurable. If not configured it will FAIL.
