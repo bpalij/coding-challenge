@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import fs from 'fs';
+import cors from 'cors';
 import csvParser from 'csv-parser';
 
 dotenv.config();
@@ -8,6 +9,9 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 const filePath = process.env.FILE_PATH;
+
+app.use(cors());
+
 
 app.get('/data', (req: Request, res: Response) => {
   
